@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const Temporal = require("../models/temporal");
-
+const sec= require("./sec.controller")
 const userCtrl = {};
 
 userCtrl.getUsers = async (req, res, next) => {
@@ -33,8 +33,17 @@ userCtrl.getUser = async (req, res, next) => {
 
 userCtrl.editUser = async (req, res, next) => {
   const { id } = req.params;
-  await User.findByIdAndUpdate(id, {$set: req.body}, {new: true});
-  res.json({ status: "User Updated" });
+  b= await sec.activeId(id)
+  if (b==undefined){
+    a= {
+      code:001,
+      err:"Datos o usuario inexistente"
+    }
+    res.json(a);
+  }else{
+    await User.findByIdAndUpdate(b.iduser, {$set: req.body}, {new: true});
+    res.json({ status: "User Updated" });
+  }
 };
 
 userCtrl.deleteUser = async (req, res, next) => {
@@ -50,18 +59,26 @@ userCtrl.confirm = async (req, res, next) => {
     email: req.body.email ,
     password: req.body.password,
   });
+  let a= await sec.userJoin(user)
 
-  var x =us.find(element=> element.email == user.email &&  element.password == user.password)
-
-  const temporal = new Temporal({
-    name: x.name,
-    email: x.email ,
-    type: x.type,
-    status: x.status,
-    iduser:x._id
-  });
-  await temporal.save();
-  res.json(temporal);
+  exist=a==undefined? false:true;
+  if(exist){
+    const temporal = new Temporal({
+      name: a.name,
+      email: a.email ,
+      type: a.type,
+      status: a.status,
+      iduser:a._id
+    });
+    await temporal.save();
+  }
+  else{
+    a= {
+      code:001,
+      err:"Datos o usuario inexistente"
+    }
+  }
+  res.json(a);
 };
 
 module.exports = userCtrl;

@@ -38,4 +38,12 @@ sessionCtrl.deleteSession = async (req, res, next) => {
   res.json({ status: "Session Deleted" });
 };
 
+
+sessionCtrl.addmensaje = async (a, b)=>{
+  const session = await Session.findById(a);
+  session.chat.push(b)
+  await Session.findByIdAndUpdate(id, {chat:session.chat}, {new: true});
+
+}
+
 module.exports = sessionCtrl;
