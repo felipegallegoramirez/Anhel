@@ -4,6 +4,8 @@ const router = express.Router();
 const user = require("../controllers/user.controller");
 const session = require("../controllers/session.controller");
 const process = require("../controllers/process.controller");
+const temporal = require("../controllers/temporal.controller")
+const as = require("../controllers/file.controller")
 
 //user
 router.get("/user/", user.getUsers);
@@ -26,5 +28,14 @@ router.post("/process/", process.createProcess);
 router.get("/process/:id", process.getProcess);
 router.put("/process/:id", process.editProcess);
 router.delete("/process/:id", process.deleteProcess);
+
+router.get("/temporal/", temporal.getTemporals);
+router.post("/temporal/", temporal.createTemporal);
+router.get("/temporal/:id", temporal.getTemporal);
+router.put("/temporal/:id", temporal.editTemporal);
+router.delete("/temporal/:id", temporal.deleteTemporal);
+
+router.get("/Storage/:id", as.get);
+
 
 module.exports = router;
