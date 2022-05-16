@@ -1,0 +1,106 @@
+:root{
+    --color-primario:#005D74;
+    --color-secundario: #008DB0 ; 
+    --color3: #2DB1D2;
+    --color4: #5AC2DC;
+    --color5: #7ED0E4;
+    --color6: #99DAEA;
+    --color7: #B5E4F0;
+}
+
+/*css del nav*/
+header{
+  height:60px;
+  width:100%;
+  display:flex;
+  align-items:center;
+}
+.nav_imagen{
+  width: 161px;
+  height: 44px;
+  margin: 0px 15%;
+  border-radius: 5px 5px 5px 5px;  
+}
+
+.nav_navegacion{
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  margin: 0px calc( (70% - 661px)/2);
+}
+
+.nav_navegacion a{
+  text-decoration:none;
+  margin: 0px 30px ;
+  color: #000000;
+}
+
+/*----------------------------------------------------------------------------------------*/
+/*css del footer*/
+
+footer{
+    position:absolute;
+    bottom: 0px ;
+    width: 100%;
+    background: rgba(181, 228, 240, 0.3);
+}
+.footer_contenedor{
+    display: flex;
+    min-width: 800px;
+    width: 100%;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.footer_contenedor > div{
+    margin: 0px 25px;
+}
+.footer_imagen{
+    width: 489px;
+    height: 134.64px;
+    margin: 0px 30px;
+    border-radius: 15px 15px 15px 15px;
+
+}
+
+.footer_redes{
+    height: 45px;
+    background-color: #99DAEA;
+    display: flex;
+    justify-content: center;
+}
+
+
+.customer_opcion div{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+.page_opcion{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+a{
+  text-decoration:none;
+  color: #000000;
+}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
