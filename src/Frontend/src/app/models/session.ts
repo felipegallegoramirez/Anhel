@@ -12,7 +12,7 @@ export class Session{
       sender:string;
       date:string;
     }> =[],
-    id:string ="",
+    id:string ="",namepsichologist=""
 ) {
     this.idprocess = idprocess
     this.idpatient = idpatient
@@ -22,6 +22,7 @@ export class Session{
     this.price = price
     this.chat= chat
     this._id=id
+    this.namepsichologist=namepsichologist
   }
     
     _id:string;
@@ -35,5 +36,6 @@ export class Session{
       message: string;
       sender:string;
       date:string;
-    }>
+    }>;
+    namepsichologist:string;
   }

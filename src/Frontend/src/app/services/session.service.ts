@@ -19,8 +19,11 @@ export class SessionService {
     return this.http.post(this.URL_API, session);
   }
 
-  getSessions() {
+  getSessionss() {
     return this.http.get<Session[]>(this.URL_API);
+  }
+  getSessions(id:string) {
+    return this.http.get<Session>(this.URL_API + `/${id}`);
   }
 
   putSession(session: Session) {

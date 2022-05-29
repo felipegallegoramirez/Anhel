@@ -70,5 +70,34 @@ sec.isPsychologistID = async (a)=>{
   })
 }
 
+sec.message = async (data)=>{
+  emisor = await sec.activeId(data.idtemp);
+  e=false;
+  if (emisor!=undefined){
+    session= await Session.findById(data.idsession);
+    if((session.idpatient==data.idreceptor ||session.idpsichologist==data.idreceptor)
+     && (session.idpatient==emisor.iduser ||session.idpsichologist==emisor.iduser)){
+      mensaje={
+        message: data.mensaje,
+        sender:data.idreceptor,
+        date:data.fecha,
+      }
+      session.chat.push(mensaje)
+      await Session.findByIdAndUpdate(data.idsession, {chat:session.chat}, {new: true});
+      e=true
+    }
+  }else{
+
+  }
+  return new Promise((resolve,reject)=>{
+    try{
+      resolve (e)
+    }catch(err){
+      reject("Error")
+    }
+  })
+}
+
+
 
 module.exports = sec;

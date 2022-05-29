@@ -18,7 +18,9 @@ export class TemporalService {
   postTemporal(temporal: Temporal) {
     return this.http.post(this.URL_API, temporal);
   }
-
+  getTemporal(id:string) {
+    return this.http.get<Temporal>(this.URL_API+ `/${id}`);
+  }
   getTemporals() {
     return this.http.get<Temporal[]>(this.URL_API);
   }

@@ -13,7 +13,8 @@ const sessionSchema = new Schema(
       message: String,
       sender:String,
       date:String
-    }]
+    }],
+    namepsichologist:String
   },
   {
     versionKey: false,

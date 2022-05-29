@@ -1,11 +1,12 @@
 const User = require("../models/user");
 const Temporal = require("../models/temporal");
-const sec= require("./sec.controller")
+const sec= require("./sec.controller");
+const temporal = require("../models/temporal");
 const userCtrl = {};
 
 userCtrl.getUsers = async (req, res, next) => {
   const users = await User.find();
-  res.json(users);
+  res.json(req.param('a'));
 };
 
 userCtrl.createUser = async (req, res, next) => {
@@ -78,7 +79,7 @@ userCtrl.confirm = async (req, res, next) => {
       err:"Datos o usuario inexistente"
     }
   }
-  res.json(a);
+  res.json(temporal);
 };
 
 module.exports = userCtrl;
