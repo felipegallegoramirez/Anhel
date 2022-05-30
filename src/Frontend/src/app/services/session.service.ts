@@ -8,7 +8,10 @@ import { Session } from "../models/session";
   providedIn: 'root'
 })
 export class SessionService {
+
   selectedSession: Session;
+  sesiones: Session[]=[]
+  
   readonly URL_API = "http://localhost:3000/api/session";
 
   constructor(private http: HttpClient) {

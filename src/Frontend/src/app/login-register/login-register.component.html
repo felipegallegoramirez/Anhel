@@ -6,10 +6,15 @@
 	<div class="form-container sign-up-container">
 		
 		<div class="formulario">
-			<p class="form__title"><b>Sign up</b></p>
+			<p class="form__title"><b>create acount</b></p>
 
 			<hr class="divisor">
-			<p>aqui va el registro</p>
+			
+			<form  class="formulario" [formGroup]="formRegistro" (submit)="sendR()">
+				<input type="email" placeholder="Email"id="email1" formControlName="email"/>
+				<input type="password" placeholder="Password" id="password1" formControlName="password"/>
+				<button  [disabled]="!formRegistro.valid">Sign up</button>
+			</form>
 </div>
 <!-- 
 		<div class="formulario">
@@ -30,7 +35,7 @@
 
 	<div class="form-container sign-in-container">
 
-			<form  class="formulario">
+			<form  class="formulario"  [formGroup]="formLogin" (submit)="sendL()">
 			
 				<p class="form__title"><b>Sign in</b></p>
 				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia nisi dicta omnis enim placeat ullam! Quis excepturi ut explicabo dolorum tempora, accusantium necessitatibus temporibus dolor dolores a! Pariatur, magnam nihil.</p>
@@ -38,7 +43,8 @@
 				<hr>
 				<input type="email" placeholder="Email"id="email1" formControlName="email"/>
 				<input type="password" placeholder="Password" id="password1" formControlName="password"/>
-				<button >Sign In</button>
+				<button [disabled]="!formLogin.valid">Sign In</button>
+
 			</form>
     </div>
     

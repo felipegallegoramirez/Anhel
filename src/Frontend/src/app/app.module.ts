@@ -10,6 +10,7 @@ import { AboutUSComponent } from './about-us/about-us.component';
 import { PorfileComponent } from './porfile/porfile.component';
 import { SearchComponent } from './search/search.component';
 import { StatsAsesorComponent } from './stats-asesor/stats-asesor.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { StatsAsesorComponent } from './stats-asesor/stats-asesor.component';
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

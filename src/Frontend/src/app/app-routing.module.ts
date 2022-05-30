@@ -15,7 +15,7 @@ const routes: Routes = [
   { path:'stats-asesor', component: StatsAsesorComponent },
 
 ];
-
+ 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

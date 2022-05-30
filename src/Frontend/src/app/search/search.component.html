@@ -4,14 +4,14 @@
         <p>{{resultados}} results found</p>
         <button>Create</button>
     </div>
-    <article class="cards_resultados">
+    <article *ngFor="let session of sessionService.sesiones" class="cards_resultados">
         <div class="card">
             <img src="" alt="">
             <div class="card_informacion">
-                <h1>price $</h1>
-                <h2>Name: sdasdasd</h2>
-                <p>status</p>
-                <p>date</p>
+                <h1>price {{session.price}}$</h1>
+                <h2>Name: {{obtenerUser(session.idpsichologist).name}}</h2>
+                <p>status: {{obtenerUser(session.idpsichologist).status}}</p>
+                <p>date: {{session.start}}</p>
             </div>
         </div>
         <div class="card" id="reserve">
