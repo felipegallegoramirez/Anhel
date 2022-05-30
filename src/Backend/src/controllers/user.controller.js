@@ -10,6 +10,8 @@ userCtrl.getUsers = async (req, res, next) => {
 };
 
 userCtrl.createUser = async (req, res, next) => {
+  const users = await User.find();
+
   const user = new User({
     name: req.body. name,
     phonenumber: req.body.phonenumber ,
@@ -22,8 +24,25 @@ userCtrl.createUser = async (req, res, next) => {
     idsession: req.body.idsession,
     idpublications: req.body.idpublications,
   });
-  await user.save();
-  res.json({ status: "User created" });
+  if (users.find((x)=>{if(x.email==user.email){return x}})==null){
+    let a =await user.save();
+    
+    let temporal = new Temporal({
+      name: a.name,
+      email: a.email ,
+      type: a.type,
+      status: a.status,
+      iduser:a._id
+    });
+    temporal= await temporal.save();
+    res.json(temporal);
+
+  }
+  else{
+    res.json({ status: "Correo ya en uso" });
+  }
+
+  
 };
 
 userCtrl.getUser = async (req, res, next) => {
@@ -63,18 +82,19 @@ userCtrl.confirm = async (req, res, next) => {
   let a= await sec.userJoin(user)
 
   exist=a==undefined? false:true;
+  let temporal
   if(exist){
-    const temporal = new Temporal({
+    temporal = new Temporal({
       name: a.name,
       email: a.email ,
       type: a.type,
       status: a.status,
       iduser:a._id
     });
-    await temporal.save();
+    temporal= await temporal.save();
   }
   else{
-    a= {
+    temporal= {
       code:001,
       err:"Datos o usuario inexistente"
     }

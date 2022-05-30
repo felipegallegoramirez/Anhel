@@ -18,16 +18,15 @@ export class UserService {
 
 
   postUser(user: User) {
-    console.log("buenas")
-    return this.http.post(this.URL_API, user);
+    return this.http.post<Temporal>(this.URL_API, user);
   }
 
   getUsers() {
     return this.http.get<User[]>(this.URL_API);
   }
 
-  putUser(user: User) {
-    return this.http.put(this.URL_API + `/${user._id}`, user);
+  putUser(user: User,id:string) {
+    return this.http.put(this.URL_API + `/${id}`, user);
   }
 
   deleteUser(_id: string) {

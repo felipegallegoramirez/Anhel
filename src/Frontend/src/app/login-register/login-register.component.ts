@@ -34,12 +34,12 @@ export class LoginRegisterComponent implements OnInit {
   }
 
   formRegistro = new FormGroup({
-    email: new FormControl('',[Validators.required]),
-    password: new FormControl('',[Validators.required]),
+    email: new FormControl('',[Validators.required,Validators.email]),
+    password: new FormControl('',[Validators.required,]),
   });
 
   formLogin = new FormGroup({
-    email: new FormControl('',[Validators.required]),
+    email: new FormControl('',[Validators.required,Validators.email]),
     password: new FormControl('',[Validators.required]),
   });
 
@@ -51,14 +51,11 @@ export class LoginRegisterComponent implements OnInit {
       new_user.email = this.formRegistro.value.email
       new_user.password= this.formRegistro.value.password
 
-      this.userService.postUser(new_user)
-
-      this.userService.getUserTemporal(new_user).subscribe(res => {
+      this.userService.postUser(new_user) .subscribe(res=>{
         let usuarioTemporal = res as Temporal
-        console.log("oeeeeeeeeeeeeeeeeeeeeeeeeee")
         localStorage.setItem('persona', JSON.stringify(usuarioTemporal));
-        console.log(usuarioTemporal)
-      }) 
+        window.location.replace("http://localhost:4200/porfile");
+      })
 
 
       //window.location.replace("http://localhost:4200/about");
@@ -74,8 +71,7 @@ export class LoginRegisterComponent implements OnInit {
     us.password = this.formLogin.value.password
     this.userService.getUserTemporal(us).subscribe(res => {
       let usuarioTemporal = res as Temporal
-      console.log("oeeeeeeeeeeeeeeeeeeeeeeeeee")
-      console.log(usuarioTemporal)
+      localStorage.setItem('persona', JSON.stringify(usuarioTemporal));
     }) 
 
     /*

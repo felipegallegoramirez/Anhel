@@ -14,7 +14,7 @@ const as = require("../controllers/file.controller")
 //router.get("/user/", user.getUsers);
 router.post("/user/", user.createUser); // * Crea el usuario -> User -> "Finalizado"
 router.get("/user/:id", user.getUser); // * obtener user el usuario -> idUser -> User
-//router.put("/user/:id", user.editUser);
+router.put("/user/:id", user.editUser);
 //router.delete("/user/:id", user.deleteUser);
 router.post("/user/confirm/", user.confirm); // * Login -> Correo y contraseña -> Temporal
 
