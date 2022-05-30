@@ -1,3 +1,5 @@
+<video id="a" autoplay muted></video>
+<video id="b" autoplay></video>
 <section class="z-depth-4">
 
 <div class="contenedor_contactos">
@@ -16,17 +18,15 @@
         
     </div>
 
-    <div class="mensajes">
+    <div class="mensajes" id="mess">
 
     </div>
 
     <div class="interaccion">
-        <form class="form_chat">
-            <input type="text" />
-            <button href="">
-                <i class="material-icons">send</i>
-            </button>
-        </form>   
+            <input type="text" id="in"/>
+            <button >
+                <i (click)="envio()" class="material-icons">send</i>
+            </button> 
     </div>
 
 </div>

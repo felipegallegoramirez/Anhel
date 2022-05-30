@@ -6,6 +6,8 @@ const processSchema = new Schema(
     idpatient:String,
     idpsichologist:String,
     count:Number,
+    namepatient:String,
+    namepsichologist:String
   },
   {
     versionKey: false,

@@ -1,4 +1,5 @@
 const Process = require("../models/process");
+const sec = require("./sec.controller");
 
 const processCtrl = {};
 
@@ -33,5 +34,32 @@ processCtrl.deleteProcess = async (req, res, next) => {
   await Process.findByIdAndRemove(req.params.id);
   res.json({ status: "Process Deleted" });
 };
+
+processCtrl.myProcess= async (req, res, next) => {
+  const process = await Process.find();
+  const list = req.body.process;
+  var a = [];
+  for (var i = 0; i < list.length; i++) {
+    var b = process.find((x) => { if (list[i] == x.id) { return x } })
+    b.idpatient=null;
+    b.idpsichologist=null;
+    a.push(b)
+  }
+  res.json(a);
+}
+
+processCtrl.myname= async (req, res, next) => {
+  const id = req.params['id'];
+  const temporal = req.params['temp'];
+  const process = await Process.findById(id);
+  var user = await sec.activeId(temporal);
+  if (user != null) {
+    if (process.idpatient==temporal.iduser){
+      process.namepatient=user.name;
+    }
+  }
+  await Process.findByIdAndUpdate(id,process, {new: true});
+  res.json("Si");
+}
 
 module.exports = processCtrl;
