@@ -66,24 +66,23 @@ export class LoginRegisterComponent implements OnInit {
 //login
 
   sendL(){
+    
     let us = new User();
     us.email = this.formLogin.value.email
     us.password = this.formLogin.value.password
+
     this.userService.getUserTemporal(us).subscribe(res => {
       let usuarioTemporal = res as Temporal
-      localStorage.setItem('persona', JSON.stringify(usuarioTemporal));
-    }) 
-
-    /*
-    if (usuarioTemporal) {
+      if (usuarioTemporal) {
         
         window.location.replace("http://localhost:4200/about");
         localStorage.setItem('persona', JSON.stringify(usuarioTemporal));
         //persona = JSON.parse(localStorage.getItem('persona'))
       
-    }else{
+      }else{
         console.log("no existe el correo digitado")
-    }*/
+      }
+    }) 
     this.formLogin.reset()
   }
 

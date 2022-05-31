@@ -1,3 +1,6 @@
+.section{
+    z-index: 6;
+}
 .section_top{
     width: calc(100% - 280px);
     height: 40px;
@@ -62,7 +65,7 @@ p{
     display:flex;
     flex-direction: column;
     width: 280px;
-    height: 320px;
+    height: 300px;
     margin: 6px 10px;
     -webkit-box-shadow: 0px 0px 28px -10px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 28px -10px rgba(0,0,0,0.75);
@@ -88,4 +91,78 @@ h2{
     line-height: 16px;
     color: #000000;
     transform: rotate(0.5deg);
+}
+
+
+
+.createSession{
+    z-index: 5;
+    position: absolute;
+    top: calc(50vh - 258px);
+    left: calc(50% - 320px);
+    width: 640px;
+    height:  420px; 
+    display: none;
+    flex-direction: column;
+    align-items: center; 
+    -webkit-box-shadow: 0px 0px 37px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 37px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 37px 0px rgba(0,0,0,0.75);
+}
+
+.title{
+    font-family: 'Josefin Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 53px;
+    line-height: 70px;
+    letter-spacing: 0.015em;
+
+    color: #000000;
+}
+
+#price{
+    width: 571px;
+    height: 40px;;
+
+    background: #C4C4C4;
+    border-radius: 20px;
+    margin: 20px 0px;
+}
+label{
+    font-family: 'Josefin Sans';
+    font-style: italic;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 132%;
+    letter-spacing: 0.015em;
+    color: #464646;
+}
+.btn_create{
+    width: 200px;
+    height: 56.91px;
+
+    background: #005D74;
+    border-radius: 55px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 60px;
+    /* or 333% */
+    
+    margin: 30px;
+    color: #FFFFFF;
+}
+
+form{
+    margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.fecha{
+    margin: 0px 10px;
 }

@@ -2,7 +2,7 @@
     <div class="section_top">
         <h1>Results: </h1>
         <p>{{resultados}} results found</p>
-        <button>Create</button>
+        <button (click)="desplegar_create()">Create</button>
     </div>
     <article *ngFor="let session of sessionService.sesiones" class="cards_resultados">
         <div class="card">
@@ -20,3 +20,24 @@
 
     </article>
 </section>
+
+
+<div class="createSession" id="createSession">
+    <p class="title">New session</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna 
+       aliqua. Ut enim ad minim veniam, quis nostrud exercit</p>
+    <form  [formGroup]="formExample" (submit)="send()">
+        
+        <input type="text" placeholder="Price"id="price" formControlName="price"/>
+
+        <div class="fechas">
+            <label for="start">start</label>
+            <input type="datetime-local" placeholder="start"id="start" class="fecha" formControlName="start"/>
+        
+            <label for="end">end</label>
+            <input type="datetime-local" placeholder="end"id="end"  class="fecha" formControlName="end"/>
+        </div>
+        <button class="btn_create"[disabled]="!formExample.valid">Create acount</button>
+    </form>
+</div>
