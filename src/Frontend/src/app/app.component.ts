@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'House';
   nombre:string = ""
-
+  
 
 
   ngOnInit(): void {
@@ -24,5 +24,16 @@ export class AppComponent {
   cerrarSesion(): void{
     localStorage.removeItem("persona");
     window.location.replace("http://localhost:4200/aboutus");
+  }
+  
+  verificarlogin(){
+    let persona = JSON.parse( localStorage.getItem('persona')!)
+    if(persona){
+      this.nombre=persona.name;
+      let element = document.getElementById("porfile")
+      element!.style.display = "flex"
+      let elementlogin = document.getElementById("login")
+      elementlogin!.style.display = "none"
+    }
   }
 }

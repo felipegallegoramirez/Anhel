@@ -29,7 +29,7 @@ p{
     font-size: 12px;
     line-height: 12px;
     color: #A1A8C1;
-    width: 280px;
+    max-width: 200px;
 }
 
 section {
@@ -50,7 +50,7 @@ section {
 h2{
     width:80px;
     height: 20px;
-    margin: 0px calc( 460px /6);
+    margin: 0px;
 
     font-family: 'Josefin Sans';
     font-style: normal;
@@ -58,6 +58,9 @@ h2{
     font-size: 20px;
     line-height: 20px;
     color: #005D74;
+}
+#Preview{
+    margin: 0px 200px;
 }
 
 .conteiner_lista{
@@ -69,8 +72,9 @@ h2{
 
 /*-------------------------session-----------------------*/
 
-.conteiner_session{
+article{
     display: flex;
+    flex-direction: row;
     width: 100%;
     height: 90px;
     margin:10px 0px;
@@ -80,11 +84,11 @@ h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90px;    
+    height: 90px;   
 }
 .conteiner_preview{
-    flex-direction: column;
-    width: 400px;
+    width: 360px;
+    margin: 0px 20px;
 }
 
 .conteiner_code,.conteiner_join{
@@ -100,7 +104,9 @@ img{
 .information{
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width:auto;
+    max-width: 250px;
+    margin-left: 10px;
 }
 
 button{
