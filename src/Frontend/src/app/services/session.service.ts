@@ -40,5 +40,9 @@ export class SessionService {
   getmySessions(id:string) {
     return this.http.get<Session[]>(this.URL_API + `/mysession/${id}`);
   }
+
+  join(id:string,temp:string) {
+    return this.http.get<Session[]>(this.URL_API + `/join/${id}/${temp}`);
+  }
 }
 

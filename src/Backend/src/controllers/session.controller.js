@@ -86,17 +86,27 @@ sessionCtrl.addmensaje = async (a, b) => {
 
 sessionCtrl.mySessions = async (req, res, next) => {
   const { id } = req.params;
-  temp= sec.activeId(id)
+  temp= await sec.activeId(id)
+  console.log(temp)
   if (temp!=null){
     let user = await User.findById(temp.iduser)
 
     const sesion = await Session.find();
-    const list = user.idsession;
+    if (user.idsession==null){
+      list=[]
+   }else{
+     list = user.idsession;
+   }
+   console.log(list)
     var a = [];
     for (var i = 0; i < list.length; i++) {
-      var b = process.find((x) => { if (list[i] == x.id) { return x } })
-      b.idpatient=null;
-      b.idpsichologist=null;
+      var b = sesion.find((x) => { if (list[i] == x.id) { return x } })
+      if (b?.idpatient){
+        b.idpatient=null;
+      }
+      if (b?.idpsichologist){
+        b.idpsichologist=null;
+      }
       a.push(b)
     }
   }
@@ -117,8 +127,8 @@ sessionCtrl.joinsession = async (req, res, next) => {
     var session = await Session.findById(id);
     const process = await Process.find();
     var us = await User.findById(user.iduser);
-
-    session.idpatient = temporal;
+    var us2 = await User.findById(session.idpsichologist);
+    session.idpatient = user.iduser;
     var b = process.find((x) => { if (x.idpatient == session.idpatient && x.idpsichologist == session.idpsichologist) { return x } })
     if (b == null) {
       const process = new Process({
@@ -140,7 +150,6 @@ sessionCtrl.joinsession = async (req, res, next) => {
       us.idprocesses.push(b._id)
     }
     session.idprocess = b._id;
-    var us2 = await User.findById(session.idpsichologist);
     if (us2.idprocesses.find((x) => { if (x == b._id) { return x } }) == null) {
       us2.idprocesses.push(b._id)
     }

@@ -91,7 +91,6 @@ io.on('connection', (socket) => {
 
   socket.on("join", async (data) => {
     const a = JSON.parse(data);
-    
     b= await sec.activeId(a.id)
     if (b!=null){
     socket.join(b.iduser);
@@ -101,17 +100,23 @@ io.on('connection', (socket) => {
   socket.on("message",async (data) => {      
   const packet = JSON.parse(data);
   var a=await sec.message(packet)
-  if (a){
-    io.to(packet.idreceptor).emit("message",packet);
+  if (a!=null){
+    io.to(a).emit("message",packet);
   }else (
     console.log("error")
   )
 });
 
-  socket.on('joinR', (data) => {
+  socket.on('joinR', async (data) => {
   console.log(data)
-  const roomName = data.roomName;
+  const roomName = await sec.receptor(data.temp,data.idsesion);
   io.to(roomName).emit('call', data)
+})
+
+socket.on('mirame', async (data) => {
+  console.log(data)
+  const roomName = await sec.receptor(data.temp,data.idsesion);
+  io.to(roomName).emit('miras', data)
 })
 
 });
@@ -119,6 +124,7 @@ io.on('connection', (socket) => {
 
 const { ExpressPeerServer } = require('peer');
 const { CONNECTING } = require("ws");
+const { receptor } = require("../src/controllers/sec.controller");
 const peerServer = ExpressPeerServer(server, {
   debug: true,
   port: 3000, path: '/myapp'

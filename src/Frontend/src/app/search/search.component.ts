@@ -21,6 +21,10 @@ export class SearchComponent implements OnInit {
     this.data=localStorage.getItem('persona')
     this.data=JSON.parse(this.data)
     this.obtenerSesiones()
+    if(this.data.type!='p'){
+      let ar= <HTMLButtonElement>document.getElementById("create")
+      ar.style.visibility="hidden"
+    }
   }
 
 
@@ -78,6 +82,6 @@ export class SearchComponent implements OnInit {
 
 
   reservar(session:Session){
-
+    this.sessionService.join(session._id,this.data._id).subscribe((res)=>{})
   }
 }

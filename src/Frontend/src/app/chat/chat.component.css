@@ -75,8 +75,14 @@ section {
     -webkit-box-shadow: -1px 13px 26px -23px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 13px 26px -23px rgba(0,0,0,0.75);
     box-shadow: -1px 13px 26px -23px rgba(0,0,0,0.75);
+    text-align: end;
+    box-sizing: border-box;
+    padding: 15px 30px;
 }
-
+.encabezado_chat>i{
+    color: #005D74;
+    size: 30px;
+}
 .mensajes{
     width: 100%;
     height: calc(100% - 60px);
@@ -139,13 +145,23 @@ button:active{
 }
 .contactos>div{
     width: 100%;
-    padding: 20px;
-    background-color: rgba(95, 95, 95, 0.5);
+    padding: 5px 20px;
+    background-color: rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
     border-radius: 20px;
+    margin:10px 0px
 
 }
 
-.contactos>h2{
+.contactos>div>h3{
     color: white;
+}
+
+#mensajes-chat{
+    padding: 20px;
+}
+.mio{
+    width: 100%;
+    text-align: end;
+    color: #005D74;
 }

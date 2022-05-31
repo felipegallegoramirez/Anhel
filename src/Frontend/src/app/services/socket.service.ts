@@ -49,4 +49,14 @@ export class SocketsService  extends Socket {
         this.ioSocket.emit('joinR',mensaje);
         }
 
+        mirame(mensaje:any) {
+          this.ioSocket.emit('mirame',mensaje);
+          }
+
+          miras(): Observable<any> {
+            return new Observable<any>(observer => {
+              this.ioSocket.on('miras', (data: any) => observer.next(data));
+            });
+            }
+
 }

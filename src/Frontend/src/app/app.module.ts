@@ -11,6 +11,7 @@ import { PorfileComponent } from './porfile/porfile.component';
 import { SearchComponent } from './search/search.component';
 import { StatsAsesorComponent } from './stats-asesor/stats-asesor.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LlamadaComponent } from './llamada/llamada.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AboutUSComponent,
     PorfileComponent,
     SearchComponent,
-    StatsAsesorComponent
+    StatsAsesorComponent,
+    LlamadaComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ const Session = require("../models/session");
 const process = require("../models/process");
 
 var mongoose = require('mongoose');
+const session = require("../models/session");
 
 const sec = {};
 
@@ -72,23 +73,46 @@ sec.isPsychologistID = async (a)=>{
 
 sec.message = async (data)=>{
   emisor = await sec.activeId(data.idtemp);
-  e=false;
+  e=null;
   if (emisor!=undefined){
-    session= await Session.findById(data.idsession);
-    if((session.idpatient==data.idreceptor ||session.idpsichologist==data.idreceptor)
-     && (session.idpatient==emisor.iduser ||session.idpsichologist==emisor.iduser)){
+    let session= await Session.findById(data.idsession);
+    if(session.idpatient==emisor.iduser ||session.idpsichologist==emisor.iduser){
+       let sender=session.idpatient==emisor.iduser?2:1
       mensaje={
         message: data.mensaje,
-        sender:data.idreceptor,
+        sender:sender,
         date:data.fecha,
       }
       session.chat.push(mensaje)
       await Session.findByIdAndUpdate(data.idsession, {chat:session.chat}, {new: true});
-      e=true
+      e=sender==1?session.idpatient:session.idpsichologist
     }
   }else{
 
   }
+  
+  return new Promise((resolve,reject)=>{
+    try{
+      resolve (e)
+    }catch(err){
+      reject("Error")
+    }
+  })
+}
+
+sec.receptor = async (temp,sesion)=>{
+  emisor = await sec.activeId(temp);
+  e=null;
+  if (emisor!=undefined){
+    let session= await Session.findById(sesion);
+    if(session.idpatient==emisor.iduser ||session.idpsichologist==emisor.iduser){
+       let sender=session.idpatient==emisor.iduser?2:1
+      e=sender==1?session.idpatient:session.idpsichologist
+    }
+  }else{
+
+  }
+  
   return new Promise((resolve,reject)=>{
     try{
       resolve (e)

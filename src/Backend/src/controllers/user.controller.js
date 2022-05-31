@@ -97,6 +97,7 @@ userCtrl.confirm = async (req, res, next) => {
       iduser:a._id
     });
     temporal= await temporal.save();
+    temporal.iduser=undefined
   }
   else{
     temporal= {

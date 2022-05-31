@@ -50,6 +50,8 @@ p{
     justify-content: center;
     position: absolute;
     opacity: 0;
+    margin: 0px;
+    cursor: pointer;
 }
 #reserve:hover{
     opacity: 1;
@@ -60,9 +62,11 @@ p{
 
 
 .cards_resultados{
-    display: flex;
+    display: grid;
     width: calc(100% - 280px);
     margin: 20px 140px;
+    grid-template-columns: repeat(4, 1fr);
+
 }
 
 .card{
@@ -95,6 +99,7 @@ h2{
     line-height: 16px;
     color: #000000;
     transform: rotate(0.5deg);
+    z-index: -999;
 }
 
 

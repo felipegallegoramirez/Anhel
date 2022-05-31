@@ -2,7 +2,7 @@
     <div class="section_top">
         <h1>Results: </h1>
         <p>{{resultados}} results found</p>
-        <button (click)="desplegar_create()">Create</button>
+        <button id="create"(click)="desplegar_create()">Create</button>
     </div>
     <div class="contenedor">
     <article class="cards_resultados">
@@ -41,6 +41,6 @@
             <label for="end">end</label>
             <input type="datetime-local" placeholder="end"id="end"  class="fecha" formControlName="end"/>
         </div>
-        <button class="btn_create"[disabled]="!formExample.valid">Create acount</button>
+        <button class="btn_create"[disabled]="!formExample.valid">Create session</button>
     </form>
 </div>

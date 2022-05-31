@@ -1,5 +1,4 @@
-<video id="a" autoplay muted></video>
-<video id="b" autoplay></video>
+
 <section class="z-depth-4">
 
 <div class="contenedor_contactos">
@@ -8,17 +7,31 @@
         <p>Chats</p>
     </div>
 
-    <div id="contactos"class="contactos">
+    <div *ngFor="let r of procesos"  id="contactos"class="contactos">
+        <div (click)="control(r._id)">
+            <h3 *ngIf="data.type=='p';">{{r.namepatient}}</h3>
+            <h3 *ngIf="data.type!='p';">{{r.namepsichologist}}</h3>
+        </div>
 
     </div>
 </div>
 
 <div class="chat">
     <div class="encabezado_chat">
+        <i class="material-icons" (click)="llamada()">call</i>
+        <i class="material-icons" (click)="nombre()">person</i>
         
     </div>
 
     <div class="mensajes" id="mess">
+        <div id="mensajes-chat">
+            <div class="mio">
+                <p>mio</p>
+            </div>
+            <div class="otro">
+                <p>otro</p>
+            </div>
+        </div>
 
     </div>
 

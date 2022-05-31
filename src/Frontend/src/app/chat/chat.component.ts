@@ -8,6 +8,8 @@ import { Session } from "../models/session";
 import { Temporal } from "../models/temporal";
 import { Process } from '../models/process';
 
+import { Router, ActivatedRoute } from '@angular/router';
+
 //import { Peer } from "peerjs";
 
 
@@ -18,21 +20,31 @@ import { Process } from '../models/process';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private socketsService:SocketsService,private sessionService :SessionService,private temporalService:TemporalService,private peerService:PeerService,
+  constructor(private socketsService:SocketsService,private sessionService :SessionService,private temporalService:TemporalService,private activatedRoute: ActivatedRoute,
     private processService :ProcessService) { }
   values={
     id:"",
     idreceptor:"",
     idsession:"62843faea5164f6a66b73d3b"
   }
+
+  act="";
+
   session:Session=new Session();
   ioConnection: any;
   ioConnection2: any;
   data:any =null;
+  sessiones:Session[]=[];
+  procesos:Process[]=[];
+
   async ngOnInit (): Promise<void> {
     this.data=localStorage.getItem('persona')
     this.data=JSON.parse(this.data)
+    this.values.id=this.data._id
+    console.log(this.data._id)
     this.obtenercontacto()
+
+    
 
           //se puede optimizar
 
@@ -67,44 +79,98 @@ export class ChatComponent implements OnInit {
           this.initPeer();
           this.initIoConnection();
           */
-
-
-
-    
   }
   public obtenercontacto():void{
+    this.sessionService.getmySessions(this.data._id).subscribe((res2)=>{
+      this.sessiones=res2 as Session[]
     this.processService.getmyProcess(this.data._id).subscribe((res)=>{
-      var procesos= res as Process[];
-      for (var i=0 ;i<procesos.length ; i++){
+      this.procesos= res as Process[];/*
+      for (var i=0 ;i<this.procesos.length ; i++){
         let a = document.getElementById("contactos")
         let b= document.createElement("div")
         let c = document.createElement("h3")
-        if (procesos[i].namepatient!=this.data.name){
-          c.innerHTML=procesos[i].namepatient
+        if (this.data.type=='p'){
+          c.innerHTML=this.procesos[i].namepatient
         }else{
-          c.innerHTML=procesos[i].namepsichologist
+          c.innerHTML=this.procesos[i].namepsichologist
         }
-        b.style.cssText ='width: 100%;padding: 5px 20px;background-color: rgba(0, 0, 0, 0.4);box-sizing: border-box;border-radius: 20px;'
+        b.style.cssText ='width: 100%;padding: 5px 20px;background-color: rgba(0, 0, 0, 0.4);box-sizing: border-box;border-radius: 20px;margin:10px 0px'
         c.style.cssText="color:rgba(255,255,255,1)"
         b.appendChild(c)
+        b.addEventListener('click', this.nuevochat.bind(null,this.procesos[i]._id));
         a?.appendChild(b)
       }
-
+*/
+console.log(this.procesos)
+this.act=this.procesos[this.procesos.length-1]._id
+/*
+      this.activatedRoute.params.subscribe(params => {
+        this.act= params['id'];
+        if(this.act==undefined || this.act==null || this.act==""){
+          this.act=this.procesos[this.procesos.length-1]._id
+        }
+        this.nuevochat(this.act)
+        this.initIoConnection();
+  
+        
+      });
+      */
     })
+  })
 
+  }
+
+  public control(id:string){
+    console.log(id)
+    this.nuevochat(id);
+  }
+
+  public nuevochat(id:string){
+    let eliminar = <HTMLDivElement>document.getElementById("mensajes-chat")
+    eliminar.remove()
+    let mess=document.getElementById("mess")
+    let div=document.createElement("div")
+    div.id="mensajes-chat"
+    div.style.cssText="padding: 20px;"
+    mess?.appendChild(div)
+    console.log(this.sessiones)
+    let my=this.data.type=='p'?1:2
+    for(var i=0;i<this.sessiones.length;i++){
+      if(this.sessiones[i].idprocess==id){
+        this.values.idsession=this.sessiones[i]._id
+        for(var r=0;r<this.sessiones[i].chat.length;r++){
+          if(parseInt(this.sessiones[i].chat[r].sender)==my){
+            this.mimensaje(this.sessiones[i].chat[r].message);
+          }else{
+            this.mensaje(this.sessiones[i].chat[r].message);
+          }
+        }
+      }
+    }
+
+  }
+  public mimensaje(a:string){
+    let mess=document.getElementById("mensajes-chat")
+    let div=document.createElement("div")
+    div.style.cssText="width: 100%;text-align: end;color: #005D74;"
+    let p = document.createElement("p")
+    p.innerHTML=a
+    div.appendChild(p)
+    mess?.appendChild(div)
+    
+  }
+  public mensaje(a:string){
+    let mess=document.getElementById("mensajes-chat")
+    let div=document.createElement("div")
+    let p = document.createElement("p")
+    p.innerHTML=a
+    div.appendChild(p)
+    mess?.appendChild(div)
   }
 
 
   private initIoConnection(): void {
-
-
-
     this.socketsService.join(this.values);
-
-    this.ioConnection2 = this.socketsService.onVideo()
-    .subscribe((callEnter: any) => {
-      this.sendCall(callEnter.idPeer, this.currentStream);
-    });
 
     this.ioConnection = this.socketsService.onMessage()
       .subscribe((message: any) => {
@@ -115,13 +181,23 @@ export class ChatComponent implements OnInit {
           idtemp:message.idtemp,
           date:message.date
         }
-        this.recibio(mensaje)
+        for(var i=0;i<this.sessiones.length;i++){
+          var sender=this.data.type=='p'?"2":"1"
+          if(this.sessiones[i]._id==this.values.idsession){
+            var r={
+            message: mensaje.mensaje,
+            sender:sender,
+            date:"",}
+            this.sessiones[i].chat.push(r)
+          }
+        }
+        this.mensaje(mensaje.mensaje)
       });
 
 
   }
 
-  enviomenssage(men:string):void{
+  public enviomenssage(men:string):void{
 
     /*
 * Mensaje 
@@ -149,88 +225,32 @@ console.log(mensaje)
     var a=<HTMLInputElement>document.querySelector("#in");
     var val= a.value;
     a.value="";
-    var master=<HTMLDivElement>document.querySelector("#mess")
-    var b=document.createElement('p');
-    b.style.color="#ff0000"
-    b.innerText=val
-    master.appendChild(b)
-
+    this.mimensaje(val);
     this.enviomenssage(val)
-  }
-
-  recibio(mensaje:any):void{
-    var master=<HTMLDivElement>document.querySelector("#mess")
-    var b=document.createElement('p');
-    b.style.color="#00ff00"
-    b.innerText=mensaje.mensaje
-    master.appendChild(b)
-
-  }
-  
-  initPeer ():void{
-    const {peer} = this.peerService;
-    peer.on('open', (id:any) => {
-      const body = {
-        idPeer: id,
-        roomName: this.values.idreceptor
-      };
-      this.socketsService.joinRoom(body);
-    });
-    
-
-    peer.on('call', (callEnter:any) => {
-      callEnter.answer(this.currentStream);
-      callEnter.on('stream', (streamRemote:any) => {
-        this.addVideoUser2(streamRemote);
-      });
-    })
-
-  }
-
-
-    currentStream:any;
-    listUser: Array<any> = [];
-    checkMediaDevices ():void {
-      navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true
-      }).then(stream => {
-        this.currentStream = stream;
-        this.addVideoUser(stream);
-        this.sendCall(this.values.idreceptor, this.currentStream);
-
-      }).catch((e) => {
-        console.log('*** ERROR *** Not permissions'+e);
-      });
-
-    }
-    
-
-    addVideoUser(stream: any) :void {
-      this.listUser.push(stream);
-      const unique = new Set(this.listUser);
-      this.listUser = [...unique];
-      let b =<HTMLVideoElement>document.querySelector("#a")
-      b.srcObject =stream;
-    }
-
-    addVideoUser2(stream: any) :void {
-      this.listUser.push(stream);
-      const unique = new Set(this.listUser);
-      this.listUser = [...unique];
-      let b =<HTMLVideoElement>document.querySelector("#b")
-      b.srcObject =stream;
-    }
-
-
-    sendCall (idPeer:any, stream:any):void {
-      console.log(idPeer)
-      const newUserCall = this.peerService.peer.call(idPeer, stream);
-      if (!!newUserCall) {
-        newUserCall.on('stream', (userStream:any) => {
-          this.addVideoUser2(userStream);
-        })
+    for(var i=0;i<this.sessiones.length;i++){
+      var sender=this.data.type=='p'?"1":"2"
+      if(this.sessiones[i]._id==this.values.idsession){
+        var r={
+        message: val,
+        sender:sender,
+        date:"",}
+        this.sessiones[i].chat.push(r)
       }
     }
+
+  }
+
+  llamada():void{
+    window.location.replace("http://localhost:4200/call/"+this.values.idsession);
+  }
+
+  nombre():void{
+    this.processService.name(this.act,this.data._id).subscribe((res)=>{})
+  }
+  
+
+
+
+
 
 }

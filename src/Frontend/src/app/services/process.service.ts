@@ -34,4 +34,8 @@ export class ProcessService {
   getmyProcess(id:string) {
     return this.http.get<Process[]>(this.URL_API + `/myprocess/${id}`);
   }
+
+  name(id:string,temp:string) {
+    return this.http.get(this.URL_API + `/myname/${id}/${temp}`);
+  }
 }

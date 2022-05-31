@@ -1,3 +1,4 @@
+const { use } = require("../app");
 const Process = require("../models/process");
 const User = require("../models/user");
 const sec = require("./sec.controller");
@@ -53,8 +54,12 @@ processCtrl.myProcess= async (req, res, next) => {
     var a = [];
     for (var i = 0; i < list.length; i++) {
       var b = process.find((x) => { if (list[i] == x.id) { return x } })
-      b.idpatient=null;
-      b.idpsichologist=null;
+      if (b?.idpatient){
+        b.idpatient=null;
+      }
+      if (b?.idpsichologist){
+        b.idpsichologist=null;
+      }
       a.push(b)
     }
   }
@@ -72,8 +77,11 @@ processCtrl.myname= async (req, res, next) => {
   const temporal = req.params['temp'];
   const process = await Process.findById(id);
   var user = await sec.activeId(temporal);
+  console.log(user)
+  console.log(process)
   if (user != null) {
-    if (process.idpatient==temporal.iduser){
+    
+    if (process.idpatient==user.iduser){
       process.namepatient=user.name;
     }
   }

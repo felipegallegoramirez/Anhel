@@ -24,7 +24,7 @@ router.post("/session/:id", session.createSession); // * Crea una session -> Ses
 //router.put("/session/:id", session.editSession);
 router.delete("/session/:id", session.deleteSession);// * Buscar session id-> id -> session
 router.get("/session/mysession/:id", session.mySessions); // * Sesiones propias -> idsessions[] -> sesiones[]
-router.get("/join/:id/:temp", session.joinsession);// * Unirse a una sesion -> id:idsesion temp:idtemporal -> "Todo piola"
+router.get("/session/join/:id/:temp", session.joinsession);// * Unirse a una sesion -> id:idsesion temp:idtemporal -> "Todo piola"
 
 
 //router.get("/process/", process.getProcesss);
@@ -33,6 +33,7 @@ router.get("/join/:id/:temp", session.joinsession);// * Unirse a una sesion -> i
 //router.put("/process/:id", process.editProcess);
 //router.delete("/process/:id", process.deleteProcess);
 router.get("/process/myprocess/:id", process.myProcess); // * procesos propios -> idprocesos[] -> procesos[]
+router.get("/process/myname/:id/:temp", process.myname); // * procesos propios -> idprocesos[] -> procesos[]
 
 //router.get("/temporal/", temporal.getTemporals);
 //router.post("/temporal/", temporal.createTemporal);

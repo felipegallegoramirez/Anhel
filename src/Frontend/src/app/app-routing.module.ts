@@ -6,6 +6,7 @@ import { AboutUSComponent } from './about-us/about-us.component';
 import { PorfileComponent } from './porfile/porfile.component';
 import {SearchComponent} from './search/search.component';
 import {StatsAsesorComponent} from './stats-asesor/stats-asesor.component'
+import {LlamadaComponent} from './llamada/llamada.component'
 const routes: Routes = [
   { path:'login', component: LoginRegisterComponent },
   { path:'chat', component: ChatComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path:'porfile', component: PorfileComponent },
   { path:'search', component: SearchComponent },
   { path:'stats-asesor', component: StatsAsesorComponent },
+  { path:'call/:id', component: LlamadaComponent },
 
 ];
  
