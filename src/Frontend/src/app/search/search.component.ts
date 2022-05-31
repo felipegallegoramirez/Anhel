@@ -75,4 +75,9 @@ export class SearchComponent implements OnInit {
     let pestaña = document.getElementById("createSession")
     pestaña!.style.display = "flex"
   }
+
+
+  reservar(session:Session){
+
+  }
 }

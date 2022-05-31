@@ -48,11 +48,15 @@ p{
     align-items: center;
     background-color: #9C9C9C;
     justify-content: center;
+    position: absolute;
+    opacity: 0;
+}
+#reserve:hover{
+    opacity: 1;
 }
 #reserve h1{
     color: #fff;
 }
-
 
 
 .cards_resultados{

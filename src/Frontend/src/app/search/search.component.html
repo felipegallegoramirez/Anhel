@@ -4,8 +4,14 @@
         <p>{{resultados}} results found</p>
         <button (click)="desplegar_create()">Create</button>
     </div>
-    <article *ngFor="let session of sessionService.sesiones" class="cards_resultados">
-        <div class="card">
+    <div class="contenedor">
+    <article class="cards_resultados">
+        <div *ngFor="let session of sessionService.sesiones"  class="card">
+            
+            <div (click)="reservar(session)" class="card" id="reserve">
+                <h1>reserve</h1>
+            </div>
+            
             <img src="" alt="">
             <div class="card_informacion">
                 <h1>price {{session.price}}$</h1>
@@ -13,11 +19,9 @@
                 <p>date: {{session.start}}</p>
             </div>
         </div>
-        <div class="card" id="reserve">
-            <h1>reserve</h1>
-        </div>
-
+       
     </article>
+</div>
 </section>
 
 
