@@ -1,4 +1,5 @@
 const Process = require("../models/process");
+const User = require("../models/user");
 const sec = require("./sec.controller");
 
 const processCtrl = {};
@@ -36,14 +37,32 @@ processCtrl.deleteProcess = async (req, res, next) => {
 };
 
 processCtrl.myProcess= async (req, res, next) => {
-  const process = await Process.find();
-  const list = req.body.process;
-  var a = [];
-  for (var i = 0; i < list.length; i++) {
-    var b = process.find((x) => { if (list[i] == x.id) { return x } })
-    b.idpatient=null;
-    b.idpsichologist=null;
-    a.push(b)
+
+  const { id } = req.params;
+  temp= await sec.activeId(id)
+  if (temp!=null){
+    let user = await User.findById(temp.iduser)
+    console.log(temp.iduser)
+    const process = await Process.find();
+    var list=[]
+    if (user.idprocesses==null){
+       list=[]
+    }else{
+      list = user.idprocesses;
+    }
+    var a = [];
+    for (var i = 0; i < list.length; i++) {
+      var b = process.find((x) => { if (list[i] == x.id) { return x } })
+      b.idpatient=null;
+      b.idpsichologist=null;
+      a.push(b)
+    }
+  }
+  else{
+    a={
+      code:001,
+      err:"No es un usuario activo"
+    }
   }
   res.json(a);
 }

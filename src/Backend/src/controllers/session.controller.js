@@ -21,24 +21,28 @@ sessionCtrl.getSessions = async (req, res, next) => {
 };
 
 sessionCtrl.createSession = async (req, res, next) => {
-  var id = await sec.activeId(req.body.idpsichologist);
+  var id = await sec.activeId(req.params['id']);
   if (id != null) {
-    if (await sec.isPsychologistID(id.iduser)) {
-      const session = new Session({
+    if (await sec.isPsychologistID(req.params['id'])) {
+      var session = new Session({
         idprocess: req.body.idprocess,
         idpsichologist: id.iduser,
         start: req.body.start,
         end: req.body.end,
         price: req.body.price,
-        chat: req.body.chat
+        chat: req.body.chat,
+        namepsichologist: id.name
       });
-      await session.save();
+      session=await session.save();
+      var us = await User.findById(id.iduser)
+      us.idsession.push(session._id)
+      await User.findByIdAndUpdate(id.iduser, us, { new: true });
+      res.json({ status: "Session created" });
+    }else{
+      res.json({ status: "Error" });
     }
-    var us = await User.findById(id.iduser)
-    us.idsession.push(session._id)
-    await User.findByIdAndUpdate(user.iduser, us, { new: true });
   }
-  res.json({ status: "Session created" });
+
 };
 /*
 sessionCtrl.createSession = async (req, res, next) => {
@@ -81,14 +85,26 @@ sessionCtrl.addmensaje = async (a, b) => {
 }
 
 sessionCtrl.mySessions = async (req, res, next) => {
-  const session = await Session.find();
-  const list = req.body.sessions;
-  var a = [];
-  for (var i = 0; i < list.length; i++) {
-    var b = session.find((x) => { if (list[i] == x.id) { return x } })
-    b.idpatient=null;
-    b.idpsichologist=null;
-    a.push(b)
+  const { id } = req.params;
+  temp= sec.activeId(id)
+  if (temp!=null){
+    let user = await User.findById(temp.iduser)
+
+    const sesion = await Session.find();
+    const list = user.idsession;
+    var a = [];
+    for (var i = 0; i < list.length; i++) {
+      var b = process.find((x) => { if (list[i] == x.id) { return x } })
+      b.idpatient=null;
+      b.idpsichologist=null;
+      a.push(b)
+    }
+  }
+  else{
+    a={
+      code:001,
+      err:"No es un usuario activo"
+    }
   }
   res.json(a);
 }

@@ -20,10 +20,10 @@ router.post("/user/confirm/", user.confirm); // * Login -> Correo y contraseña 
 
 
 router.get("/session/", session.getSessions); // * Devuelve todas las sesiones sin datos comprometedores -> vacio -> sesiones[]
-router.post("/session/", session.createSession); // * Crea una session -> Session -> idsession
+router.post("/session/:id", session.createSession); // * Crea una session -> Session -> idsession
 //router.put("/session/:id", session.editSession);
 router.delete("/session/:id", session.deleteSession);// * Buscar session id-> id -> session
-router.post("/mysession/", session.mySessions); // * Sesiones propias -> idsessions[] -> sesiones[]
+router.get("/session/mysession/:id", session.mySessions); // * Sesiones propias -> idsessions[] -> sesiones[]
 router.get("/join/:id/:temp", session.joinsession);// * Unirse a una sesion -> id:idsesion temp:idtemporal -> "Todo piola"
 
 
@@ -32,7 +32,7 @@ router.get("/join/:id/:temp", session.joinsession);// * Unirse a una sesion -> i
 //router.get("/process/:id", process.getProcess);
 //router.put("/process/:id", process.editProcess);
 //router.delete("/process/:id", process.deleteProcess);
-router.post("/myprocess/", process.myProcess); // * procesos propios -> idprocesos[] -> procesos[]
+router.get("/process/myprocess/:id", process.myProcess); // * procesos propios -> idprocesos[] -> procesos[]
 
 //router.get("/temporal/", temporal.getTemporals);
 //router.post("/temporal/", temporal.createTemporal);

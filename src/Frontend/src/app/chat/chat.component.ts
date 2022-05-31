@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketsService} from '../services/socket.service'
 import { SessionService } from '../services/session.service'
+import { ProcessService } from '../services/process.service'
 import { TemporalService } from '../services/temporal.service'
 import { PeerService } from '../services/peer.service'
 import { Session } from "../models/session";
 import { Temporal } from "../models/temporal";
+import { Process } from '../models/process';
 
 //import { Peer } from "peerjs";
 
@@ -16,7 +18,8 @@ import { Temporal } from "../models/temporal";
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private socketsService:SocketsService,private sessionService :SessionService,private temporalService:TemporalService,private peerService:PeerService) { }
+  constructor(private socketsService:SocketsService,private sessionService :SessionService,private temporalService:TemporalService,private peerService:PeerService,
+    private processService :ProcessService) { }
   values={
     id:"",
     idreceptor:"",
@@ -25,14 +28,12 @@ export class ChatComponent implements OnInit {
   session:Session=new Session();
   ioConnection: any;
   ioConnection2: any;
-
+  data:any =null;
   async ngOnInit (): Promise<void> {
-    if (localStorage.getItem('id')!=null){
-      // let a=await this.sessionService.getSessions(this.values.idsession).subscribe()            <--probar
-      this.values.id=localStorage.getItem('id') || '';
-     this.sessionService.getSessions(this.values.idsession).subscribe((res)=>{
-        this.session=res;
-        this.temporalService.getTemporal(this.values.id).subscribe((res)=>{
+    this.data=localStorage.getItem('persona')
+    this.data=JSON.parse(this.data)
+    this.obtenercontacto()
+
           //se puede optimizar
 
           /*
@@ -56,8 +57,7 @@ export class ChatComponent implements OnInit {
           !Alsalir se elimina el localstorage
 
           */
-          var a =res as Temporal
-
+         /*
           if (this.session.idpatient==a.iduser){
             this.values.idreceptor=this.session.idpsichologist
           }else{
@@ -66,40 +66,46 @@ export class ChatComponent implements OnInit {
           this.checkMediaDevices();
           this.initPeer();
           this.initIoConnection();
-        })
+          */
 
-      })
-      this.checkMediaDevices();
-      this.initPeer();
-      this.initIoConnection();
-    } 
+
+
+    
+  }
+  public obtenercontacto():void{
+    this.processService.getmyProcess(this.data._id).subscribe((res)=>{
+      var procesos= res as Process[];
+      for (var i=0 ;i<procesos.length ; i++){
+        let a = document.getElementById("contactos")
+        let b= document.createElement("div")
+        let c = document.createElement("h3")
+        if (procesos[i].namepatient!=this.data.name){
+          c.innerHTML=procesos[i].namepatient
+        }else{
+          c.innerHTML=procesos[i].namepsichologist
+        }
+        b.style.cssText ='width: 100%;padding: 5px 20px;background-color: rgba(0, 0, 0, 0.4);box-sizing: border-box;border-radius: 20px;'
+        c.style.cssText="color:rgba(255,255,255,1)"
+        b.appendChild(c)
+        a?.appendChild(b)
+      }
+
+    })
+
   }
 
 
   private initIoConnection(): void {
 
-    const {peer} = this.peerService;
-    peer.on('open', (id:any) => {
-      const body = {
-        idPeer: id,
-        roomName: this.values.idreceptor
-      };
-      this.socketsService.joinRoom(body);
-    });
-    
 
-    peer.on('call', (callEnter:any) => {
-      callEnter.answer(this.currentStream);
-      callEnter.on('stream', (streamRemote:any) => {
-        this.addVideoUser2(streamRemote);
-      });
-    })
 
     this.socketsService.join(this.values);
+
     this.ioConnection2 = this.socketsService.onVideo()
     .subscribe((callEnter: any) => {
       this.sendCall(callEnter.idPeer, this.currentStream);
     });
+
     this.ioConnection = this.socketsService.onMessage()
       .subscribe((message: any) => {
         var mensaje={
@@ -162,7 +168,22 @@ console.log(mensaje)
   }
   
   initPeer ():void{
+    const {peer} = this.peerService;
+    peer.on('open', (id:any) => {
+      const body = {
+        idPeer: id,
+        roomName: this.values.idreceptor
+      };
+      this.socketsService.joinRoom(body);
+    });
+    
 
+    peer.on('call', (callEnter:any) => {
+      callEnter.answer(this.currentStream);
+      callEnter.on('stream', (streamRemote:any) => {
+        this.addVideoUser2(streamRemote);
+      });
+    })
 
   }
 

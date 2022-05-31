@@ -30,4 +30,8 @@ export class ProcessService {
   deleteProcess(_id: string) {
     return this.http.delete(this.URL_API + `/${_id}`);
   }
+
+  getmyProcess(id:string) {
+    return this.http.get<Process[]>(this.URL_API + `/myprocess/${id}`);
+  }
 }

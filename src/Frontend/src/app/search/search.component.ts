@@ -15,11 +15,12 @@ import { ControlContainer, FormBuilder, FormControl, FormGroup, Validators } fro
 export class SearchComponent implements OnInit {
   resultados:number = 0
   constructor(public sessionService: SessionService, private userService : UserService) {}
-   
+  data:any =null;
 
   ngOnInit(): void {
+    this.data=localStorage.getItem('persona')
+    this.data=JSON.parse(this.data)
     this.obtenerSesiones()
-    this.obtenerUsers()
   }
 
 
@@ -38,14 +39,7 @@ export class SearchComponent implements OnInit {
       this.resultados= this.sessionService.sesiones.length
     })
   }
-
-  obtenerUsers(){
-    this.userService.getUsers()
-    .subscribe(res => {
-      this.userService.users = res as User[]
-    })
-  }
-
+  /*
   obtenerUser(id:string):User{
     let psicologo = this.userService.users.find(function(element:User) {
       return element._id == id;
@@ -56,7 +50,7 @@ export class SearchComponent implements OnInit {
       return new User()
     }
   }
-
+  */
   send(){
     console.log("buenas send")
     let persona = JSON.parse( localStorage.getItem('persona')!)  
@@ -68,7 +62,7 @@ export class SearchComponent implements OnInit {
       new_session.idpsichologist = persona._id
       
 
-      this.sessionService.postSession(new_session).subscribe(res=>{
+      this.sessionService.postSession(new_session,this.data._id).subscribe(res=>{
         window.location.replace("http://localhost:4200/search");
       })
 

@@ -18,8 +18,8 @@ export class SessionService {
     this.selectedSession = new Session();
   }
 
-  postSession(session: Session) {
-    return this.http.post(this.URL_API, session);
+  postSession(session: Session,id:string) {
+    return this.http.post(this.URL_API+"/"+id, session);
   }
 
   getSessionss() {
@@ -35,6 +35,10 @@ export class SessionService {
 
   deleteSession(_id: string) {
     return this.http.delete(this.URL_API + `/${_id}`);
+  }
+
+  getmySessions(id:string) {
+    return this.http.get<Session[]>(this.URL_API + `/mysession/${id}`);
   }
 }
 

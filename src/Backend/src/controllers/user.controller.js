@@ -52,6 +52,7 @@ userCtrl.getUser = async (req, res, next) => {
 };
 
 userCtrl.editUser = async (req, res, next) => {
+  
   const { id } = req.params;
   b= await sec.activeId(id)
   if (b==undefined){
@@ -61,7 +62,11 @@ userCtrl.editUser = async (req, res, next) => {
     }
     res.json(a);
   }else{
-    await User.findByIdAndUpdate(b.iduser, {$set: req.body}, {new: true});
+    var user = await User.findById(b.iduser)
+    user.email=req.body.email
+    user.name=req.body.name
+    user.phonenumber=req.body.phonenumber
+    await User.findByIdAndUpdate(user._id, user, {new: true});
     res.json({ status: "User Updated" });
   }
 };

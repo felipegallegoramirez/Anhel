@@ -26,7 +26,7 @@ export class UserService {
   }
 
   putUser(user: User,id:string) {
-    return this.http.put(this.URL_API + `/${id}`, user);
+    return this.http.put(this.URL_API +"/"+id, user);
   }
 
   deleteUser(_id: string) {

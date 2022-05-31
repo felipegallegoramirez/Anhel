@@ -51,7 +51,7 @@ sec.userJoin = async (a)=>{
 
 sec.isPsychologistID = async (a)=>{
   b = await sec.activeId(a);
-  const user = await User.findById(b._id);
+  const user = await User.findById(b.iduser);
   if (user==null){
     exist=false;
   }else{
