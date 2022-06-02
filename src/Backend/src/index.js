@@ -87,7 +87,6 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
 
   socket.on("join", async (data) => {
     const a = JSON.parse(data);
@@ -96,6 +95,7 @@ io.on('connection', (socket) => {
     socket.join(b.iduser);
   }
   });
+
 
   socket.on("message",async (data) => {      
   const packet = JSON.parse(data);
@@ -109,8 +109,8 @@ io.on('connection', (socket) => {
 
   socket.on('joinR', async (data) => {
   console.log(data)
-  const roomName = await sec.receptor(data.temp,data.idsesion);
-  io.to(roomName).emit('call', data)
+  io.to(data.idsesion).emit('call', data)
+  
 })
 
 socket.on('mirame', async (data) => {
@@ -135,7 +135,7 @@ peerServer.on('connection', (client) => {
  
 app.use('/peerjs', peerServer);
 
-
+//peerjs --port 9000
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

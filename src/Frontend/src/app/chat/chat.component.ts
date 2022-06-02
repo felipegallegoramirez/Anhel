@@ -103,6 +103,7 @@ export class ChatComponent implements OnInit {
 */
 console.log(this.procesos)
 this.act=this.procesos[this.procesos.length-1]._id
+this.initIoConnection();
 /*
       this.activatedRoute.params.subscribe(params => {
         this.act= params['id'];

@@ -25,13 +25,15 @@ export class LlamadaComponent implements OnInit {
     this.data=localStorage.getItem('persona')
     this.data=JSON.parse(this.data)
     this.values.id=this.data._id
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => { 
       this.values.idsession= params['id'];
           this.checkMediaDevices();
           this.initPeer();
           this.initIoConnection();
     });
   }
+
+  
 
   values={
     id:"",
@@ -44,21 +46,11 @@ export class LlamadaComponent implements OnInit {
   private initIoConnection(): void {
     this.socketsService.join(this.values);
 
-    this.ioConnection = this.socketsService.miras()
-    .subscribe((callEnter: any) => {
-      this.sendCall(callEnter.idPeer, this.currentStream);
-      console.log("mirame")
-    });
 
     this.ioConnection2 = this.socketsService.onVideo()
     .subscribe((callEnter: any) => {
       this.sendCall(callEnter.idPeer, this.currentStream);
-      const body = {
-        idPeer: this.ido,
-        idsesion: this.values.idsession,
-        temp: callEnter.temp
-      };
-      this.socketsService.mirame(body)
+      console.log(callEnter);
     });
 
 
@@ -74,16 +66,19 @@ export class LlamadaComponent implements OnInit {
       callEnter.answer(this.currentStream);
       callEnter.on('stream', (streamRemote:any) => {
         this.addVideoUser2(streamRemote);
+
       });
-    })
+    }, (err:any) => {
+      console.log('*** ERROR *** Peer call ', err);
+    });
     
     peer.on('open', (id:any) => {
-      this.ido=id;
       const body = {
-        idPeer: this.ido,
+        idPeer: id,
         idsesion: this.values.idsession,
         temp: this.values.id
       };
+      console.log("cambie");
       this.socketsService.joinRoom(body);
     });
     
@@ -101,7 +96,6 @@ export class LlamadaComponent implements OnInit {
     }).then(stream => {
       this.currentStream = stream;
       this.addVideoUser(stream);
-      this.sendCall(this.values.idreceptor, this.currentStream);
 
     }).catch((e) => {
       console.log('*** ERROR *** Not permissions'+e);
@@ -119,14 +113,13 @@ export class LlamadaComponent implements OnInit {
   }
 
   addVideoUser2(stream: any) :void {
-
     let b =<HTMLVideoElement>document.querySelector("#b")
     b.srcObject =stream;
   }
 
 
-  sendCall (idPeer:any, stream:any):void {
-    const newUserCall = this.peerService.peer.call(idPeer, stream);
+  async sendCall (idPeer:any, stream:any): Promise<void> {
+    var newUserCall = await this.peerService.peer.call(idPeer, stream);
     if (!!newUserCall) {
       newUserCall.on('stream', (userStream:any) => {
         this.addVideoUser2(userStream);
