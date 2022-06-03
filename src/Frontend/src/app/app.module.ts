@@ -12,6 +12,9 @@ import { SearchComponent } from './search/search.component';
 import { StatsAsesorComponent } from './stats-asesor/stats-asesor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LlamadaComponent } from './llamada/llamada.component';
+import { CreateComponent } from './create/create.component';
+import { SpublicationComponent } from './spublication/spublication.component';
+import { PublicationComponent } from './publication/publication.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { LlamadaComponent } from './llamada/llamada.component';
     PorfileComponent,
     SearchComponent,
     StatsAsesorComponent,
-    LlamadaComponent
+    LlamadaComponent,
+    CreateComponent,
+    SpublicationComponent,
+    PublicationComponent
   ],
   imports: [
     BrowserModule,

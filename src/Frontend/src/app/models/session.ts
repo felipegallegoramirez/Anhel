@@ -12,7 +12,8 @@ export class Session{
       sender:string;
       date:string;
     }> =[],
-    id:string ="",namepsichologist=""
+    id:string ="",namepsichologist="",
+    status=""
 ) {
     this.idprocess = idprocess
     this.idpatient = idpatient
@@ -23,6 +24,7 @@ export class Session{
     this.chat= chat
     this._id=id
     this.namepsichologist=namepsichologist
+    this.status=status
   }
     
     _id:string;
@@ -38,4 +40,5 @@ export class Session{
       date:string;
     }>;
     namepsichologist:string;
+    status:string;
   }

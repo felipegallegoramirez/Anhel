@@ -1,0 +1,21 @@
+.centro{
+    width: 70vw;
+    margin: 20px 15vw;
+    text-align: center;
+}
+
+.imagen{
+    width: 600px;
+    border-radius: 20px;
+    box-shadow: 20px 10px 30px #000000a0;
+    margin: 20px 0px;
+}
+
+.texto{
+    margin: 20px 0px;
+    border-radius: 20px;
+    text-align: initial;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 20px 10px 30px #000000a0;
+}

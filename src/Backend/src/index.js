@@ -108,9 +108,8 @@ io.on('connection', (socket) => {
 });
 
   socket.on('joinR', async (data) => {
-  console.log(data)
-  io.to(data.idsesion).emit('call', data)
-  
+  const roomName = await sec.receptor(data.temp,data.idsesion);
+  io.to(roomName).emit('call', data)
 })
 
 socket.on('mirame', async (data) => {

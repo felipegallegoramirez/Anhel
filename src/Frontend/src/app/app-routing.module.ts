@@ -7,6 +7,10 @@ import { PorfileComponent } from './porfile/porfile.component';
 import {SearchComponent} from './search/search.component';
 import {StatsAsesorComponent} from './stats-asesor/stats-asesor.component'
 import {LlamadaComponent} from './llamada/llamada.component'
+import {CreateComponent} from './create/create.component'
+import {SpublicationComponent} from './spublication/spublication.component'
+import {PublicationComponent} from './publication/publication.component'
+
 const routes: Routes = [
   { path:'login', component: LoginRegisterComponent },
   { path:'chat', component: ChatComponent },
@@ -15,6 +19,9 @@ const routes: Routes = [
   { path:'search', component: SearchComponent },
   { path:'stats-asesor', component: StatsAsesorComponent },
   { path:'call/:id', component: LlamadaComponent },
+  { path:'create', component:CreateComponent},
+  { path:'publi/:id', component: PublicationComponent },
+  { path:'find', component: SpublicationComponent },
 
 ];
  

@@ -62,7 +62,8 @@ sessionCtrl.createSession = async (req, res, next) => {
 sessionCtrl.getSession = async (req, res, next) => {
   const { id } = req.params;
   const session = await Session.findById(id);
-  res.json(session);
+  var result = session.filter(a=> a.state!="u")
+  res.json(result);
 };
 
 sessionCtrl.editSession = async (req, res, next) => {
@@ -150,6 +151,7 @@ sessionCtrl.joinsession = async (req, res, next) => {
       us.idprocesses.push(b._id)
     }
     session.idprocess = b._id;
+    session.state="u"
     if (us2.idprocesses.find((x) => { if (x == b._id) { return x } }) == null) {
       us2.idprocesses.push(b._id)
     }

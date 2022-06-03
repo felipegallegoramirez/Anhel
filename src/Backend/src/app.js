@@ -15,6 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Routes
+app.use('/public/images', express.static(path.resolve('public/images')));
 app.use("/api/", require("./routes/routes"));
 
 module.exports = app;

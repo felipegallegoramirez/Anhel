@@ -9,6 +9,7 @@ const sessionSchema = new Schema(
     start:String,
     end:String,
     price:Number,
+    state:String,
     chat:[{
       message: String,
       sender:String,

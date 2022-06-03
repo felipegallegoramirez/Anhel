@@ -1,15 +1,24 @@
 const fs = require("fs");
 
-const as = {};
+const file = {};
 
-as.get = async (req, res, next) => {
-    const { id } = req.params;
-    console.log("./Storage/"+id)
-    fs.readFile("./Storage/"+id, function(err, data) {
-        res.writeHead(200, {"Content-type": "image/jpg"});
-        res.write(data);
-        return res.end();
-      });
-  };
 
-  module.exports = as;
+file.upload = async (req, res, next) => {
+    try{
+    var x = req.files
+    var a= []
+    for (var i =0 ; i<x.length ; i++){
+        fs.renameSync(x[i].path,x[i].path+ '.' + x[i].mimetype.split('/')[1]);
+        a.push(x[i].path+ '.' + x[i].mimetype.split('/')[1]);
+    }
+    res.json(a)}
+    catch{
+    res.json("Error inesperado")}
+};
+
+
+file.get = async (req, res, next) => {
+    const path = req.body.path;
+    res.file("public/images/"+path)    ;}
+
+  module.exports = file;

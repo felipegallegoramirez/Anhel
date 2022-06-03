@@ -42,6 +42,9 @@ export class AppComponent implements OnInit {
       element!.style.display = "flex"
       let elementlogin = document.getElementById("login")
       elementlogin!.style.display = "none"
+    }else{
+      let asd = document.getElementById("porfile2")
+      asd!.style.display="none"
     }
   }
   }

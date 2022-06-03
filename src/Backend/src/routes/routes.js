@@ -5,7 +5,11 @@ const user = require("../controllers/user.controller");
 const session = require("../controllers/session.controller");
 const process = require("../controllers/process.controller");
 const temporal = require("../controllers/temporal.controller")
-const as = require("../controllers/file.controller")
+const file = require("../controllers/file.controller")
+const publication= require("../controllers/publications.controller");
+const multer = require('multer');
+
+const upload = multer({ dest: 'public/images/' })
 
 
 // !Que hace -> Que Pide -> Que devuelve
@@ -43,5 +47,12 @@ router.get("/process/myname/:id/:temp", process.myname); // * procesos propios -
 
 //router.get("/Storage/:id", as.get);
 
+router.get("/publi/", publication.getPublications); 
+router.post("/publi/:id", publication.createPublication); 
+router.get("/publi/:id", publication.getPublication);
+
+
+
+router.post("/Storage", upload.array('imagenes'),file.upload);
 
 module.exports = router;

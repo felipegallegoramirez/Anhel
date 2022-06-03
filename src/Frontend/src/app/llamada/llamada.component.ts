@@ -50,7 +50,6 @@ export class LlamadaComponent implements OnInit {
     this.ioConnection2 = this.socketsService.onVideo()
     .subscribe((callEnter: any) => {
       this.sendCall(callEnter.idPeer, this.currentStream);
-      console.log(callEnter);
     });
 
 
@@ -78,7 +77,6 @@ export class LlamadaComponent implements OnInit {
         idsesion: this.values.idsession,
         temp: this.values.id
       };
-      console.log("cambie");
       this.socketsService.joinRoom(body);
     });
     
