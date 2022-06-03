@@ -44,7 +44,9 @@ export class PorfileComponent implements OnInit {
       usuario.email= this.formExample.value.email
       usuario.phonenumber = this.formExample.value.number
       //usuario.age = this.formExample.value.age
-      this.userService.putUser(usuario,this.data._id).subscribe((res)=>{})
+      this.userService.putUser(usuario,this.data._id).subscribe((res)=>{
+        window.location.replace("http://localhost:4200/login/");
+      })
     }
     //this.formExample.reset()
   

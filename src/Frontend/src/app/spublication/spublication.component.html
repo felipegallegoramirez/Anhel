@@ -1,4 +1,4 @@
-<div class="button" *ngIf="va==true"> <button>Crear</button></div>
+<div class="button" *ngIf="va==true" > <button routerLink="/create">Crear</button></div>
 <div class="centro">
 
      <div *ngFor="let publi of publicationService.publications" class="card"  routerLink="/publi/{{publi._id}}"  >

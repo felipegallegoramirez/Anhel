@@ -8,6 +8,7 @@ sessionCtrl.getSessions = async (req, res, next) => {
   const sessions = await Session.find();
   var r=[]
   for(var i =0; i<sessions.length;i++){
+    if (sessions[i].state!="u"){
   var b={
     _id:sessions[i]._id,
     start:sessions[i].start,
@@ -16,6 +17,7 @@ sessionCtrl.getSessions = async (req, res, next) => {
     namepsichologist:sessions[i].namepsichologist,
   }
   r.push(b)
+}
   }
   res.json(r);
 };

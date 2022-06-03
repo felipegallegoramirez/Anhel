@@ -20,6 +20,7 @@ header{
   height: 44px;
   margin: 0px 15%;
   border-radius: 5px 5px 5px 5px;  
+  cursor: pointer;
 }
 
 .nav_navegacion{
@@ -58,6 +59,7 @@ footer{
     margin: 0px 25px;
 }
 .footer_imagen{
+  cursor: pointer;
     width: 489px;
     height: 134.64px;
     margin: 0px 30px;
@@ -87,6 +89,7 @@ footer{
 a{
   text-decoration:none;
   color: #000000;
+  cursor: pointer;
 }
 #porfile{
   display: none;
